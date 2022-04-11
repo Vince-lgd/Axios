@@ -1,25 +1,28 @@
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
+import axios from 'axios';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const [citationSimpson, setCitationSimpson] = useState('');
+  const citSimpson = () =>{
+  axios
+    .get('https://simpsons-quotes-api.herokuapp.com/quotes')
+    .then((res) => res.data)
+    .then((data) => data[0])
+    .then((data) => setCitationSimpson(data)
+    
+    );
+};
+
+return(
+  <div className="App">
+      
+    <button type="button" onClick={citSimpson}>change quote</button>  
+    {citationSimpson.quote}
+    <img src={citationSimpson.image}></img>
     </div>
-  );
-}
+);
+};
+
 
 export default App;
